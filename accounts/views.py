@@ -28,7 +28,10 @@ def customerPage(request, pk_test):
     NewCustomer = customer.objects.get(id = pk_test)
     orders = NewCustomer.order_set.all()
     order_count = orders.count()
-    context = {'customer': NewCustomer, 'orders': orders, 'Order_count': order_count}
+
+    myFilter = OrderFilter();
+
+    context = {'customer': NewCustomer, 'orders': orders, 'Order_count': order_count, 'myFilter': myFilter}
     return render(request, 'accounts/customer.html', context)
 
 def createOrder(request, pkCrteOrder):
@@ -41,12 +44,12 @@ def createOrder(request, pkCrteOrder):
         # form = orderForm(request.POST)
         print("post request detected")
         formSet = OrderFormSet(request.POST, instance=CustomerOrderOwner)
-        # if formSet.is_valid():
-        formSet.save()
-        print("Trying to redirect to / ")
-        return(redirect('/'))
-        # else:
-            # print("formset was invalid")
+        if formSet.is_valid():
+            formSet.save()
+            print("Trying to redirect to / ")
+            return(redirect('/'))
+        else:
+            print("formset was invalid")
 
     context = {'formSet': formSet}
     return(render(request, 'accounts/orderForm.html', context))
