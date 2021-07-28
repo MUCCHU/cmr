@@ -1,4 +1,12 @@
 {% load static %}
+<style>
+  .hellomsg{
+    font-size: 18px;
+    color: white;
+    margin-right: 20px;
+    width: auto;
+  }
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <img src="{% static 'images/logo.jpg' %}" alt="">
@@ -15,6 +23,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
+      {% if request.user.is_staff %}
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
         </li>
@@ -24,7 +33,10 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Customer</a>
         </li>
+        {% endif %}
       </ul>
     </div>
   </div>
+  <span class="hellomsg">Hello, {{request.user}} </span>
+  <span ><a class="hellomsg" href="{% url 'logoutpage' %}"> Logout </a></span>
 </nav>

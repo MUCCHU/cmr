@@ -1,0 +1,1 @@
+web: guinocorn cmr.wsgi --log-file -
